@@ -1,6 +1,7 @@
 import test, {type ExecutionContext} from 'ava';
 import busboy from 'busboy';
 import express from 'express';
+import {fileURLToPath} from 'node:url';
 import {chromium, webkit, type Page} from 'playwright';
 import type ky from '../source/index.js'; // eslint-disable-line import/no-duplicates
 import type {Progress} from '../source/index.js'; // eslint-disable-line import/no-duplicates
@@ -15,10 +16,10 @@ declare global {
 	}
 }
 
-const DIST_DIR = new URL('../distribution', import.meta.url).toString();
+const DIST_DIR = fileURLToPath(new URL('../distribution', import.meta.url));
 const createEsmTestServer = async (options?: HttpServerOptions) => {
 	const server = await createHttpTestServer(options);
-	server.use('/distribution', express.static(DIST_DIR.replace(/^file:\/\//, '')));
+	server.use('/distribution', express.static(DIST_DIR));
 	server.use((_, response, next) => {
 		response.set('Connection', 'close');
 		next();

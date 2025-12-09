@@ -248,6 +248,7 @@ export const kyOptionKeys: KyOptionsRegistry = {
 	onUploadProgress: true,
 	fetch: true,
 	context: true,
+	noContentValue: true,
 };
 
 // Vendor-specific fetch options that should always be passed to fetch()
