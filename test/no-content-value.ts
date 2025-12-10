@@ -1,3 +1,4 @@
+/* eslint-disable ava/no-ignored-test-files */
 import test from 'ava';
 import ky from '../source/index.js';
 import {createHttpTestServer} from './helpers/create-http-test-server.js';

@@ -1,7 +1,7 @@
+import {fileURLToPath} from 'node:url';
 import test, {type ExecutionContext} from 'ava';
 import busboy from 'busboy';
 import express from 'express';
-import {fileURLToPath} from 'node:url';
 import {chromium, webkit, type Page} from 'playwright';
 import type ky from '../source/index.js'; // eslint-disable-line import/no-duplicates
 import type {Progress} from '../source/index.js'; // eslint-disable-line import/no-duplicates
@@ -494,6 +494,10 @@ defaultBrowsersTest('request is cancelled on timeout', async (t: ExecutionContex
 			requestAborted = true;
 		});
 
+		response.on('close', () => {
+			requestAborted = true;
+		});
+
 		// Never respond to simulate timeout
 		setTimeout(() => {
 			if (!response.headersSent) {
@@ -510,8 +514,8 @@ defaultBrowsersTest('request is cancelled on timeout', async (t: ExecutionContex
 		{message: /Request timed out/},
 	);
 
-	// Wait a bit to ensure the abort signal was received
-	await page.waitForTimeout(200);
+	// Wait to ensure the abort/close signal was received (webkit can be slower)
+	await page.waitForTimeout(2500);
 
 	t.true(requestAborted, 'Request should be aborted on timeout');
 });

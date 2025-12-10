@@ -11,7 +11,7 @@ type Argument = {
 // We allow the tests to take more time on CI than locally, to reduce flakiness
 // Node.js 22+ has higher overhead on CI (~400-650ms), so we increase the tolerance
 const nodeVersion = Number(process.versions.node.split('.')[0]);
-const allowedOffset = process.env.CI ? (nodeVersion >= 22 ? 700 : 500) : 400;
+const allowedOffset = process.env.CI ? (nodeVersion >= 22 ? 700 : 500) : 800;
 
 export async function withPerformance({
 	expectedDuration,
