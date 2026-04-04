@@ -59,6 +59,27 @@ export type KyOptions = {
 	parseJson?: (text: string) => unknown;
 
 	/**
+	Value returned by `.json()` when the response body is empty or the response status is `204`.
+
+	This preserves the convenience of avoiding JSON parse errors for empty responses while giving you control over the returned value.
+
+	@default ''
+
+	@example
+	```
+	import ky from 'ky';
+
+	const json = await ky('https://example.com/no-content', {
+		noContentValue: null
+	}).json();
+
+	console.log(json);
+	//=> null
+	```
+	*/
+	noContentValue?: unknown;
+
+	/**
 	User-defined JSON-stringifying function.
 
 	Use-cases:

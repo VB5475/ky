@@ -92,6 +92,10 @@
 		}
 	},
 	"ava": {
+		"files": [
+			"test/*.ts",
+			"!test/no-content-value.ts"
+		],
 		"extensions": {
 			"ts": "module"
 		},

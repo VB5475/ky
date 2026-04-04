@@ -140,13 +140,15 @@ export class Ky {
 				const response = await result;
 
 				if (type === 'json') {
+					const {noContentValue} = ky.#options;
+
 					if (response.status === 204) {
-						return '';
+						return noContentValue;
 					}
 
 					const text = await response.text();
 					if (text === '') {
-						return '';
+						return noContentValue;
 					}
 
 					if (options.parseJson) {
@@ -209,6 +211,7 @@ export class Ky {
 			timeout: options.timeout ?? 10_000,
 			fetch: options.fetch ?? globalThis.fetch.bind(globalThis),
 			context: options.context ?? {},
+			noContentValue: options.noContentValue === undefined ? '' : options.noContentValue,
 		};
 
 		if (typeof this.#input !== 'string' && !(this.#input instanceof URL || this.#input instanceof globalThis.Request)) {
